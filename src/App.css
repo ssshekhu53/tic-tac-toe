@@ -20,6 +20,7 @@ header {
 .square {
    height: 10rem;
    width: 10rem;
+   border-width: 8px !important;
 }
 
 .players {
@@ -63,7 +64,7 @@ header {
     position: fixed;
     bottom: 0;
     right: 0;
-    padding: 15px 25px;
+    padding: 5px 10px;
     background: #FFFFFF;
     box-shadow: -1px -1px 10px rgb(165, 162, 162);
     border-radius: 5px 0 0 5px;

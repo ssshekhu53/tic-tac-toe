@@ -1,7 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Permanent+Marker&display=swap');
 * {
    box-sizing: border-box !important;
    scroll-behavior: smooth;
+}
+
+body {
+   font-family: 'Architects Daughter', cursive;
 }
 
 header {
@@ -18,10 +22,28 @@ header {
    width: 10rem;
 }
 
+.players {
+   padding-left: 5rem;
+   padding-right: 5rem;
+}
+
 @media screen and (max-width: 532px) {
    .square {
       height: 9rem;
    }
+   .players {
+      padding-left: 1rem;
+      padding-right: 1rem;
+   }
+}
+
+.card {
+   min-width: 130px;
+   width: max-content;
+}
+
+.card .card-header {
+   font-size: large;
 }
 
 .buttons {

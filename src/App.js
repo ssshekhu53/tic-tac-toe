@@ -108,22 +108,28 @@ function App() {
 				<hr/>
 			</header>
 			<main className="mt-5 pb-5" style={{}}>
-				<div className='players row mb-5'>
-					<div className='col-sm-1'></div>
-					<div className='col-sm-1 pb-2'>
+				<div className='players mb-5 d-flex'>
+				<div className='card text-dark text-center me-2'>
+							<div className='card-header bg-primary text-white fw-bold'>{players[0].name} ({playerTurn?'O':'X'})</div>
+							<div className='card-body fw-bold'><i>{players[0].points}</i></div>
+						</div>
+						<div className='card text-dark text-center ms-auto'>
+							<div className='card-header bg-success text-white fw-bold'>{players[1].name} ({playerTurn?'X':'O'})</div>
+							<div className='card-body fw-bold'><i>{players[1].points}</i></div>
+						</div>
+					{/* <div className='col-sm-2 d-flex justify-content-center pb-2'>
 						<div className='card text-dark text-center'>
-							<div className='card-header bg-primary text-white fw-bold'>{players[0].name} (X)</div>
+							<div className='card-header bg-primary text-white fw-bold'>{players[0].name} ({playerTurn?'O':'X'})</div>
 							<div className='card-body fw-bold'><i>{players[0].points}</i></div>
 						</div>
 					</div>
 					<div className='col-sm-8'></div>
-					<div className='col-sm-1'>
+					<div className='col-sm-2 d-flex justify-content-center'>
 						<div className='card text-dark text-center'>
-							<div className='card-header bg-success text-white fw-bold'>{players[1].name} (O)</div>
+							<div className='card-header bg-success text-white fw-bold'>{players[1].name} ({playerTurn?'X':'O'})</div>
 							<div className='card-body fw-bold'><i>{players[1].points}</i></div>
 						</div>
-					</div>
-					<div className='col-sm-1 pb-2'></div>
+					</div> */}
 				</div>
 				<div className="squares d-flex justify-content-center align-items-center">
 					<Square borderPosition="border-end border-bottom" value={squareValue[0]} onClick={() => { onBoxClick(0) }} />

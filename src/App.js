@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import './App.css'
 import Square from './components/squares';
+import Modal from './components/modal';
 
 let initialState=["", "", "", "", "", "", "", "", ""];
 let initialPlayer=[{name: 'Player 1', points: 0}, {name: 'Player 2', points: 0}];
@@ -11,6 +12,7 @@ function App() {
 	let [turn, setTurn]=useState(true);
 	let [players, setPlayers]=useState(initialPlayer);
 	let [gameState, setGameState]=useState(true);
+	let [playerTurn, setPlayerTurn]=useState(0);
 
 	function onBoxClick(index) {
 		let temp=Array.from(squareValue);
@@ -37,22 +39,30 @@ function App() {
         let winner = checkWinner();
 		let tempPlayer=players;
         if (winner) {
-            clearBoard();
 			if(winner=='X') {
-				alert(`Ta da! ${tempPlayer[0].name} won the Game!`);
-				tempPlayer[0].points++;
+				alert(`Ta da! ${tempPlayer[playerTurn].name} won the Game!`);
+				tempPlayer[playerTurn].points++;
 			}
 			else {
-				alert(`Ta da! ${tempPlayer[1].name} won the Game!`);
-				tempPlayer[1].points++;
+				alert(`Ta da! ${tempPlayer[playerTurn==0?1:0].name} won the Game!`);
+				tempPlayer[playerTurn==0?1:0].points++;
 			}
+			clearBoard();
 			setPlayers(tempPlayer);
+			alert(`${players[playerTurn==0?1:0].name} will start`);
+			setPlayerTurn(playerTurn==0?1:0);
         }
 		else if(squareValue.indexOf('')==-1) {
-			clearBoard();
 			alert('Match draw');
+			clearBoard();
+			alert(`${players[playerTurn==0?1:0].name} will start`);
+			setPlayerTurn(playerTurn==0?1:0);
 		}
-    }, [squareValue])
+    }, [squareValue]);
+
+	useEffect(() => {
+		init();
+	}, []);
 
 	const checkWinner = () => {
         const lines = [
@@ -65,10 +75,9 @@ function App() {
             [0, 4, 8],
             [2, 4, 6],
         ];
-        // console.log('Class: App, Function: checkWinner ==', squareValue[0], squareValue[1], squareValue[2]);
-        for (let i = 0; i < lines.length; i++) {
-            const [a, b, c] = lines[i];
-            if (squareValue[a] && squareValue[a] === squareValue[b] && squareValue[a] === squareValue[c]) {
+        for(let i=0; i<lines.length; i++) {
+            const [a, b, c]=lines[i];
+            if (squareValue[a] && squareValue[a]===squareValue[b] && squareValue[a]===squareValue[c]) {
                 return squareValue[a];
             }
         }
@@ -77,16 +86,20 @@ function App() {
 
 	function init() {
 		let temp=Array.from(players);
-		temp[0].name=prompt('Enter Player 1 (X) name');
-		temp[1].name=prompt('Enter Player 2 (0) name');
+		do {
+			temp[0].name=prompt('Enter Player 1 name');
+		}while(temp[0].name.trim().length==0 || temp[0].name==null);
+
+		do {
+			temp[1].name=prompt('Enter Player 2 name');
+		}while(temp[1].name.trim().length==0 || temp[1].name==null);
+
 		temp[0].points=0;
 		temp[1].points=0;
 		setPlayers(temp);
 		setGameState(false);
+		alert(`${players[playerTurn].name} will start`);
 	}
-
-	if(gameState)
-		init();
 
 	return (
 		<div className="container-fluid bg-dark text-white" style={{minHeight :'100vh'}}>
@@ -135,6 +148,7 @@ function App() {
 				</div>
 			</main>
 			<footer className="footer"><div className="fw-bolder text-dark">Made with <span className="text-danger" style={{fontSize: "25px"}}>&hearts;</span> by <a href="https://www.stackshekhu.cf/" target="_blank">SoloSheku</a></div></footer>
+			<Modal />
 		</div>
 	);
 }

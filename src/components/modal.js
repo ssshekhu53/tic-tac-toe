@@ -58,11 +58,11 @@ export const TurnModal = (props) => {
         <div className="modal fade" id="turn-modal" tabIndex="-1" aria-hidden="true">
             <div className='modal-dialog modal-dialog-centered modal-sm'>
                 <div className='modal-content'>
-                <div className='modal-header bg-info'>
-                        <h5 className='modal-title text-center fw-bold fs-4 w-100 text-white '>Game</h5>
+                <div className='modal-header bg-primary'>
+                        <h5 className='modal-title text-center fw-bold fs-4 w-100 text-white '>Game Starts!</h5>
                     </div>
                     <div className='modal-body'>
-                        <Alert alertType="alert-info" message={`${props.player} will start`} />
+                        <Alert alertType="alert-primary" message={`${props.player} will start`} />
                     </div>
                 </div>
             </div>

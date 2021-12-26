@@ -103,7 +103,7 @@ function App() {
 
 	return (
 		<div className="container-fluid bg-dark text-white" style={{minHeight :'100vh'}}>
-			<header className="display-3 text-center w-100 fw-bold py-1">
+			<header className="fs-1 text-center w-100 fw-bold py-1">
 				Tic Tac Toe
 				<hr/>
 			</header>

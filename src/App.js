@@ -3,7 +3,7 @@ import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import '../node_modules/bootstrap/dist/js/bootstrap.min.js';
 import './App.css'
 import Square from './components/squares';
-import Modal from './components/modal';
+import { Modal, InfoModal, TurnModal } from './components/modal';
 
 let initialState=["", "", "", "", "", "", "", "", ""];
 let initialPlayer=[{name: null, points: 0}, {name: null, points: 0}];
@@ -14,6 +14,7 @@ function App() {
 	let [players, setPlayers]=useState(initialPlayer);
 	let [gameState, setGameState]=useState(true);
 	let [playerTurn, setPlayerTurn]=useState(0);
+	let [playerWon, setPlayerWon]=useState();
 
 	function onBoxClick(index) {
 		let temp=Array.from(squareValue);
@@ -42,23 +43,29 @@ function App() {
 		let tempPlayer=players;
         if (winner) {
 			if(winner==='X') {
-				alert(`Ta da! ${tempPlayer[playerTurn].name} won the Game!`);
+				setPlayerWon(tempPlayer[playerTurn].name);
 				tempPlayer[playerTurn].points++;
 			}
 			else {
-				alert(`Ta da! ${tempPlayer[playerTurn===0?1:0].name} won the Game!`);
+				setPlayerWon(tempPlayer[playerTurn===0?1:0].name);
 				tempPlayer[playerTurn===0?1:0].points++;
 			}
+			document.getElementById('info-modal-btn').click();
 			clearBoard();
 			setPlayers(tempPlayer);
-			alert(`${players[playerTurn===0?1:0].name} will start`);
 			setPlayerTurn(playerTurn===0?1:0);
+			document.getElementById('info-modal').addEventListener('hidden.bs.modal', function() {
+				document.getElementById('turn-modal-btn').click();
+			});
         }
 		else if(squareValue.indexOf('')===-1) {
-			alert('Match draw');
+			setPlayerWon(null);
+			document.getElementById('info-modal-btn').click();
 			clearBoard();
-			alert(`${players[playerTurn===0?1:0].name} will start`);
 			setPlayerTurn(playerTurn===0?1:0);
+			document.getElementById('info-modal').addEventListener('hidden.bs.modal', function() {
+				document.getElementById('turn-modal-btn').click();
+			});
 		}
     }, [squareValue]);
 
@@ -103,7 +110,9 @@ function App() {
 		if(players[0].name===null || players[1].name===null)
 			return;
 		document.querySelector('#player-modal .btn-close').click();
-		alert(`${players[playerTurn].name} will start`);
+		document.getElementById('player-modal').addEventListener('hidden.bs.modal', function() {
+		document.getElementById('turn-modal-btn').click();
+		});
 	}
 
 	function init() {
@@ -149,10 +158,14 @@ function App() {
 					<button type="button" className="btn btn-lg btn-warning" onClick={clearBoard}>Clear Board</button>
 					<button type="button" className="btn btn-lg btn-light" onClick={resetGame}>Reset Game</button>
 					<button type="button" class="d-none" id="modal-btn" data-bs-toggle="modal" data-bs-target="#player-modal">Open</button>
+					<button type="button" class="d-none" id="info-modal-btn" data-bs-toggle="modal" data-bs-target="#info-modal">Open</button>
+					<button type="button" class="d-none" id="turn-modal-btn" data-bs-toggle="modal" data-bs-target="#turn-modal">Open</button>
 				</div>
 			</main>
 			<footer className="footer"><div className="fw-bolder text-dark">Made with <span className="text-danger" style={{fontSize: "25px"}}>&hearts;</span> by <a href="https://www.stackshekhu.cf/" target="_blank">SoloSheku</a></div></footer>
 			<Modal onChangePlayer1={onChangePlayer1} onChangePlayer2={onChangePlayer2} onSubmit={onSubmit} />
+			<InfoModal player={playerWon} />
+			<TurnModal player={players[playerTurn].name} />
 		</div>
 	);
 }

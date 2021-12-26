@@ -1,4 +1,4 @@
-const Modal = (props) => {
+export const Modal = (props) => {
     return (
         <div className="modal fade" id="player-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-hidden="true">
             <div className='modal-dialog modal-dialog-centered modal-sm'>
@@ -28,4 +28,53 @@ const Modal = (props) => {
     )  
 }
 
-export default Modal;
+export const InfoModal = (props) => {
+    return (
+        <div className="modal fade" id="info-modal" tabIndex="-1" aria-hidden="true">
+            <div className='modal-dialog modal-dialog-centered modal-sm'>
+                <div className='modal-content'>
+                    <div className={`modal-header ${props.player===null?'bg-dark':'bg-success'}`}>
+                        <h5 className='modal-title text-center fw-bold fs-4 w-100 text-white '>Match Result</h5>
+                    </div>
+                    <div className='modal-body'>
+                        {props.player===null &&
+                            <Alert alertType="alert-dark" message="Match Draw" />
+                        }
+                        {props.player!==null && 
+                            <Alert alertType="alert-success" message={`${props.player} won the match`} />
+                        }
+                    </div>
+                    <div className="modal-footer d-flex justify-content-center">
+                        <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal" aria-label="Close">Dismiss</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    )  
+}
+
+export const TurnModal = (props) => {
+    return (
+        <div className="modal fade" id="turn-modal" tabIndex="-1" aria-hidden="true">
+            <div className='modal-dialog modal-dialog-centered modal-sm'>
+                <div className='modal-content'>
+                <div className='modal-header bg-info'>
+                        <h5 className='modal-title text-center fw-bold fs-4 w-100 text-white '>Game</h5>
+                    </div>
+                    <div className='modal-body'>
+                        <Alert alertType="alert-info" message={`${props.player} will start`} />
+                    </div>
+                </div>
+            </div>
+        </div>
+    )  
+}
+
+const Alert = (props) => {
+    return (
+        <div className={`alert ${props.alertType} fs-4`}>{props.message}</div>
+    )
+}
+
+// export Modal;
+// export InfoModal;

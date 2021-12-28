@@ -33,7 +33,10 @@ function App() {
 	function resetGame() {
 		setSquareValue(initialState);
 		setTurn(true);
+		initialPlayer[0].points=0;
+		initialPlayer[1].points=0;
 		setPlayers(initialPlayer);
+		console.log(players[0].points);
 		setPlayerTurn(0);
 		init();
 	}
